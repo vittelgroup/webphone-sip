@@ -198,6 +198,10 @@ export class SIPClient {
               detached: () => {
                 // Disconnected from the Gateway
                 this.ws_status = "DISCONNECTED";
+                this.on_event("unregistered", {
+                  incomingcall_name: undefined,
+                  incomingcall_number: undefined,
+                });
               },
               error: (err: Error) => {
                 // Error while connecting to the Gateway
@@ -215,6 +219,10 @@ export class SIPClient {
           destroyed: () => {
             // On disconnect
             this.ws_status = "DISCONNECTED";
+            this.on_event("unregistered", {
+              incomingcall_name: undefined,
+              incomingcall_number: undefined,
+            });
           },
         });
       },
@@ -373,7 +381,6 @@ export class SIPClient {
           peer_audio: true,
           peer_video: false,
           send_peer_pli: false,
-          filename: "sipclient",
         },
       });
     }
@@ -381,7 +388,7 @@ export class SIPClient {
 
   public disconnect() {
     if (this.client) {
-      this.unregister();
+      this.ws_status = "DISCONNECTED";
       this.client.destroy();
     }
   }

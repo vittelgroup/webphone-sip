@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { SIPClient } from "./sip-gateway/sip-client";
 
 export function connect() {
@@ -8,7 +9,7 @@ export function connect() {
   const error = document.querySelector<HTMLSpanElement>("#error")!;
 
   const webphoneSipClient = new SIPClient({
-    client_id: "unique-id-identifing-user",
+    client_id: `client-${nanoid(12)}`,
     local_stream: localStream,
     remote_stream: remoteStream,
     on_error: (err) => {
@@ -39,12 +40,12 @@ export function connect() {
 
   registerButton.addEventListener("click", function () {
     webphoneSipClient.register({
-      domain: "sip.domain.com.br",
-      password: "password@2024",
+      domain: "vittel.vcmpbx.com.br",
+      password: "vittel@group#2022",
       user: "4002",
       port: 15090,
       transport: "udp",
-      name: "Agent X",
+      name: "4002",
     });
   });
 
@@ -55,9 +56,15 @@ export function connect() {
 
     webphoneSipClient.start_call(
       numberToCall.value,
-      "sip.domain.com.br",
+      "vittel.vcmpbx.com.br",
       15090
     );
+  });
+
+  const answerButton = document.getElementById("answer")!;
+
+  answerButton.addEventListener("click", function () {
+    webphoneSipClient.answer("4002");
   });
 
   const hangupButton = document.getElementById("hangup")!;

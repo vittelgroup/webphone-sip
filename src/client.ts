@@ -40,12 +40,12 @@ export function connect() {
 
   registerButton.addEventListener("click", function () {
     webphoneSipClient.register({
-      domain: "vittel.vcmpbx.com.br",
-      password: "vittel@group#2022",
-      user: "4002",
-      port: 15090,
+      domain: "sip.domain.com",
+      password: "pass@word",
+      user: "100",
+      port: 5090,
       transport: "udp",
-      name: "4002",
+      name: "100",
     });
   });
 
@@ -54,17 +54,13 @@ export function connect() {
   callButton.addEventListener("click", function () {
     const numberToCall = document.getElementById("number")! as HTMLInputElement;
 
-    webphoneSipClient.start_call(
-      numberToCall.value,
-      "vittel.vcmpbx.com.br",
-      15090
-    );
+    webphoneSipClient.start_call(numberToCall.value, "sip.domain.com", 5090);
   });
 
   const answerButton = document.getElementById("answer")!;
 
   answerButton.addEventListener("click", function () {
-    webphoneSipClient.answer("4002");
+    webphoneSipClient.answer("100");
   });
 
   const hangupButton = document.getElementById("hangup")!;

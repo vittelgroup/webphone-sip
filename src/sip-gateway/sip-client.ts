@@ -152,10 +152,10 @@ export class SIPClient {
                   if (
                     ["progress", "accepted"].includes(event || "") &&
                     this.sip &&
-                    this.JSEP
+                    jsep
                   ) {
                     this.sip.handleRemoteJsep({
-                      jsep: this.JSEP,
+                      jsep: jsep,
                       error: (err: Error) => {
                         this.on_error(err);
                         this.sip?.send({ message: { request: "hangup" } });
@@ -177,7 +177,7 @@ export class SIPClient {
                       media: { audio: hasAudio, video: hasVideo },
                       success(jsep2: SipgatewayJS.JSEP) {
                         const body = { request: "update" };
-                        this.sip?.send({ message: body, jsep });
+                        this.sip?.send({ message: body, jsep: jsep2 });
                       },
                       error(err: Error) {
                         this.on_error(err);
